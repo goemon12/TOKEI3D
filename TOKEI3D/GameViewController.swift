@@ -11,6 +11,12 @@ import QuartzCore
 import SceneKit
 
 class GameViewController: UIViewController {
+    var hariH: SCNNode!
+    var hariM: SCNNode!
+    var hariS: SCNNode!
+    var fmtH: DateFormatter!
+    var fmtM: DateFormatter!
+    var fmtS: DateFormatter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,5 +38,29 @@ class GameViewController: UIViewController {
         
         // configure the view
         scnView.backgroundColor = UIColor.black
+        
+        fmtH = DateFormatter()
+        fmtM = DateFormatter()
+        fmtS = DateFormatter()
+        fmtH.dateFormat = "HH"
+        fmtM.dateFormat = "mm"
+        fmtS.dateFormat = "ss"
+
+        hariM = scene.rootNode.childNode(withName: "HARI-M", recursively: true)
+        hariH = scene.rootNode.childNode(withName: "HARI-H", recursively: true)
+        hariS = scene.rootNode.childNode(withName: "HARI-S", recursively: true)
+        
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            let t = Date()
+            let strH = self.fmtH.string(from: t)
+            let strM = self.fmtM.string(from: t)
+            let strS = self.fmtS.string(from: t)
+            let h = Int(strH)!
+            let m = Int(strM)!
+            let s = Int(strS)!
+            self.hariH.rotation = SCNVector4(0, 0, 1, CGFloat.pi * 2 /  720 * -CGFloat(h * 60 + m))
+            self.hariM.rotation = SCNVector4(0, 0, 1, CGFloat.pi * 2 / 3600 * -CGFloat(m * 60 + s))
+            self.hariS.rotation = SCNVector4(0, 0, 1, CGFloat.pi * 2 / 60 * -CGFloat(s))
+        })
     }
 }
