@@ -17,6 +17,7 @@ class GameViewController: UIViewController {
     var fmtH: DateFormatter!
     var fmtM: DateFormatter!
     var fmtS: DateFormatter!
+    //(1)変数定義
     var textH: SCNText!
     var textM: SCNText!
     var textS: SCNText!
@@ -53,6 +54,7 @@ class GameViewController: UIViewController {
         hariH = scene.rootNode.childNode(withName: "HARI-H", recursively: true)
         hariS = scene.rootNode.childNode(withName: "HARI-S", recursively: true)
         
+        //（２）変数にtokei3D.scnファイルのTEXTノードのジオメトリを代入する
         textH = scene.rootNode.childNode(withName: "TEXT-H", recursively: true)!.geometry as? SCNText
         textM = scene.rootNode.childNode(withName: "TEXT-M", recursively: true)!.geometry as? SCNText
         textS = scene.rootNode.childNode(withName: "TEXT-S", recursively: true)!.geometry as? SCNText
@@ -68,7 +70,8 @@ class GameViewController: UIViewController {
             self.hariH.rotation = SCNVector4(0, 0, 1, CGFloat.pi * 2 /  720 * -CGFloat(h * 60 + m))
             self.hariM.rotation = SCNVector4(0, 0, 1, CGFloat.pi * 2 / 3600 * -CGFloat(m * 60 + s))
             self.hariS.rotation = SCNVector4(0, 0, 1, CGFloat.pi * 2 / 60 * -CGFloat(s))
-            
+ 
+            //(3)TEXTノードのジオメトリのstringプロパティに時間文字を代入する
             self.textH.string = "\(h)"
             self.textM.string = "\(m)"
             self.textS.string = "\(s)"
